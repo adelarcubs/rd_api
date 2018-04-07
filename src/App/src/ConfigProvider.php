@@ -38,7 +38,8 @@ class ConfigProvider
             'factories'  => [
                 Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
                 Handler\TrackHandler::class => Handler\TrackHandlerFactory::class,
-                Handler\RegisterkHandler::class => Handler\RegisterHandlerFactory::class,
+                Handler\RegisterHandler::class => Handler\RegisterHandlerFactory::class,
+                Handler\LogHandler::class => Handler\LogHandlerFactory::class,
             ],
         ];
     }

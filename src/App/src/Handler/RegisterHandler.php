@@ -7,9 +7,9 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\JsonResponse;
 use Doctrine\ORM\EntityManager;
-use App\Entity\Track;
+use App\Entity\Customer;
 
-class RegisterkHandler implements RequestHandlerInterface
+class RegisterHandler implements RequestHandlerInterface
 {
 
     private $entityManager;
@@ -24,15 +24,15 @@ class RegisterkHandler implements RequestHandlerInterface
         $body = $request->getBody()->__toString();
         
         $json = (array) json_decode($body, true);
-        $trackCode = $json['trackCode'];
+        $inCookie = $json['cookie'];
         
-        $start = mb_stripos($trackCode, "=") + 1;
+        $start = mb_stripos($inCookie, "=") + 1;
         
-        $cookie = mb_substr($trackCode, $start);
+        $cookie = mb_substr($inCookie, $start);
         
-        $track = new Track($json['URL'], $cookie);
+        $customer = new Customer($json['name'], $json['email'], $cookie);
         
-        $this->entityManager->persist($track);
+        $this->entityManager->persist($customer);
         $this->entityManager->flush();
         
         return new JsonResponse($json);
