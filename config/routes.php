@@ -34,5 +34,7 @@ use Zend\Expressive\MiddlewareFactory;
  */
 return function (Application $app, MiddlewareFactory $factory, ContainerInterface $container) : void {
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
-    $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
+    $app->post('/track', App\Handler\TrackHandler::class, 'track');
+    $app->get('/log', App\Handler\LogHandler::class, 'log');
+    $app->post('/register', App\Handler\RegisterHandler::class, 'register');
 };
