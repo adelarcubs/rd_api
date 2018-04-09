@@ -23,16 +23,16 @@ class LogHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $json = $this->getViews();
-        
+
         return new JsonResponse($json);
     }
 
     private function getViews()
     {
         $result = $this->getQuery();
-        
+
         $return = [];
-        
+
         foreach ($result as $row) {
             $key = $row['email'] ?? $row['cookie'];
             $return[$key][] = [
@@ -40,14 +40,14 @@ class LogHandler implements RequestHandlerInterface
                 'hitOn' => $row['hitOn']->format('Y-m-d H:i:s')
             ];
         }
-        
+
         return $return;
     }
 
     private function getQuery()
     {
         $qb = $this->entityManager->createQueryBuilder();
-        
+
         $qb->select([
             'C.email',
             'T.url',
@@ -56,10 +56,10 @@ class LogHandler implements RequestHandlerInterface
         ]);
         $qb->from('App\Entity\Track', 'T');
         $qb->leftJoin('App\Entity\Customer', 'C', Join::WITH, 'C.cookie = T.cookie');
-        
+
         $qb->orderBy('C.email', 'ASC');
         $qb->addOrderBy('T.hitOn', 'ASC');
-        
+
         return $qb->getQuery()->getArrayResult();
     }
 }

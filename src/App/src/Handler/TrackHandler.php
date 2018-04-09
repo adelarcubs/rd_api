@@ -22,19 +22,19 @@ class TrackHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getBody()->__toString();
-        
+
         $json = (array) json_decode($body, true);
         $trackCode = $json['trackCode'];
-        
+
         $start = mb_stripos($trackCode, "=") + 1;
-        
+
         $cookie = mb_substr($trackCode, $start);
-        
+
         $track = new Track($json['URL'], $cookie);
-        
+
         $this->entityManager->persist($track);
         $this->entityManager->flush();
-        
+
         return new JsonResponse($json);
     }
 }

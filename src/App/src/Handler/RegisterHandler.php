@@ -22,19 +22,19 @@ class RegisterHandler implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $body = $request->getBody()->__toString();
-        
+
         $json = (array) json_decode($body, true);
         $inCookie = $json['cookie'];
-        
+
         $start = mb_stripos($inCookie, "=") + 1;
-        
+
         $cookie = mb_substr($inCookie, $start);
-        
+
         $customer = new Customer($json['name'], $json['email'], $cookie);
-        
+
         $this->entityManager->persist($customer);
         $this->entityManager->flush();
-        
+
         return new JsonResponse($json);
     }
 }

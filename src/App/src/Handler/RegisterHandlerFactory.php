@@ -11,7 +11,7 @@ class RegisterHandlerFactory
     public function __invoke(ContainerInterface $container): RequestHandlerInterface
     {
         $em = $container->get('doctrine.entity_manager.orm_default');
-        
+
         return new RegisterHandler($em);
     }
 }
