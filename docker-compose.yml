@@ -1,0 +1,9 @@
+api:
+  build: .
+  dockerfile: Dockerfile
+  ports:
+   - "8888:80"
+  volumes:
+   - .:/var/www
+  environment:
+   - CLEARDB_DATABASE_URL=sqlite:ddata/database.db
