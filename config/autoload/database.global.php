@@ -4,7 +4,7 @@ return [
         'connection' => [
             'orm_default' => [
                 'params' => [
-                    'url' => 'sqlite:ddata/database.db'
+                    'url' => getenv('CLEARDB_DATABASE_URL')
                 ]
             ]
         ],
