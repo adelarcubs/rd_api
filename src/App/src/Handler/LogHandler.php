@@ -34,7 +34,8 @@ class LogHandler implements RequestHandlerInterface
         $return = [];
         
         foreach ($result as $row) {
-            $return[$row['email']][] = [
+            $key = $row['email'] ?? $row['cookie'];
+            $return[$key][] = [
                 'url' => $row['url'],
                 'hitOn' => $row['hitOn']->format('Y-m-d H:i:s')
             ];
@@ -50,7 +51,8 @@ class LogHandler implements RequestHandlerInterface
         $qb->select([
             'C.email',
             'T.url',
-            'T.hitOn'
+            'T.hitOn',
+            'T.cookie'
         ]);
         $qb->from('App\Entity\Track', 'T');
         $qb->leftJoin('App\Entity\Customer', 'C', Join::WITH, 'C.cookie = T.cookie');
